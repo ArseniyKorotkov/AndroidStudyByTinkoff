@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Android(Study By Tinkoff)"
 include(":app")
- 
+include(":languageStudy")
