@@ -3,7 +3,8 @@ package by.arsy.languagestudy
 lateinit var text: String
 
 fun main() {
-    text = getTextHello()
+    val name = "Arseni"
+    text = "${getTextHello()} $name"
     printHello(text)
 }
 
