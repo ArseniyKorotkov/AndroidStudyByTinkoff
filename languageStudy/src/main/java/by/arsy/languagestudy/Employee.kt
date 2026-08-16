@@ -24,3 +24,5 @@ class Designer : Employee() {
         println("The designer is heading to his beautiful home.")
     }
 }
+
+// TODO здесь можно создать новый класс, который будет наследоваться от класса Employee. Не забудьте переопределить методы haveLunch() и goHome()
