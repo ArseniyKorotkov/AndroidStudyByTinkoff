@@ -1,31 +1,23 @@
 package by.arsy.languagestudy
 
 fun main() {
-    val a = 5
-    var result = 0
-    var zeroCount: String
+    val person = Person(name = "Alex")
+    val person2 = Person(
+        personName = "Sam",
+        depositName = "main"
+    )
 
-    while (true) {
-        result = plus(a,result)
-
-        if (result % 10 == 0) {
-            zeroCount = when {
-                result % 1000 == 0 -> "three"
-                result % 100 == 0 -> "two"
-                else -> "one"
-            }
-        } else {
-            continue
-        }
-
-        println("result $result has ${zeroCount.uppercase()} zero")
-
-        if (result > 5000) {
-            break
-        }
-    }
+    printPerson(person)
+    printPerson(person2)
 }
 
+fun printPerson(person: Person) {
+    val size = person.accounts.size
+    print("Person ${person.name} has $size deposits")
+    if (size > 0) {
+        print(", for example '${person.accounts.first().name}' deposit")
+    }
+    println()
+}
 
-fun plus(a: Int, b: Int): Int = a + b
 
