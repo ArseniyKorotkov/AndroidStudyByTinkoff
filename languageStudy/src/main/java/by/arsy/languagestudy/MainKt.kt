@@ -1,31 +1,31 @@
 package by.arsy.languagestudy
 
 fun main() {
-    val a = 10
-    val b = 3
-    println("max long = ${Long.MAX_VALUE}")
-    println("max int = ${Int.MAX_VALUE}")
-    print("\n\n")
-    plus(Int.MAX_VALUE, Int.MAX_VALUE)
-    minus(a, b)
-    multiply(a, b)
-    divide(a, b)
+    val a = 5
+    var result = 0
+    var zeroCount: String
+
+    while (true) {
+        result = plus(a,result)
+
+        if (result % 10 == 0) {
+            zeroCount = when {
+                result % 1000 == 0 -> "three"
+                result % 100 == 0 -> "two"
+                else -> "one"
+            }
+        } else {
+            continue
+        }
+
+        println("result $result has ${zeroCount.uppercase()} zero")
+
+        if (result > 5000) {
+            break
+        }
+    }
 }
 
-fun plus(a: Int, b: Int) {
-    println("$a + $b = ${a + b} !!!!!")
-    println("right: $a + $b = ${a.toLong() + b}\n")
-}
-fun plus(a: Long, b: Long) {
-    println("$a + $b = ${a + b} !!!!!")
-}
-fun minus(a: Int, b: Int) {
-    println("$a - $b = ${a - b}\n")
-}
-fun multiply(a: Int, b: Int) {
-    println("$a * $b = ${a * b}\n")
-}
-fun divide(a: Int, b: Int) {
-    println("$a / $b = ${a / b} !!!!!")
-    println("right: $a / $b = ${a.toDouble() / b}\n")
-}
+
+fun plus(a: Int, b: Int): Int = a + b
+
