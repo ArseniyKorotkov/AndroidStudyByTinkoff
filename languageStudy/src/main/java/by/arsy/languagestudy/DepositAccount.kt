@@ -1,7 +1,9 @@
 package by.arsy.languagestudy
 
-class DepositAccount(name: String = "default") : BankAccount(bankAccountName = name) {
+class DepositAccount(val name: String = "default") : BankAccountInterface {
 
+    override val bankAccountName: String
+        get() = name
     private var availableFunds: Double = 790_000.0
 
     override fun getAvailableFunds(): Double {
