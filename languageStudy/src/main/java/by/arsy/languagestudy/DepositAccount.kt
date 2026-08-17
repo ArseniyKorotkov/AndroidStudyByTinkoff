@@ -1,14 +1,14 @@
 package by.arsy.languagestudy
 
-class DepositAccount(val name: String = "default") {
+class DepositAccount(name: String = "default") : BankAccount(bankAccountName = name) {
 
     private var availableFunds: Double = 790_000.0
 
-    fun getAvailableFunds(): Double {
+    override fun getAvailableFunds(): Double {
         return availableFunds
     }
 
-    fun withdrawMoney(amount: Double): Double {
+    override fun withdrawMoney(amount: Double): Double {
         return if (amount > 0 && amount <= availableFunds) {
             availableFunds -= amount
             amount
@@ -17,10 +17,10 @@ class DepositAccount(val name: String = "default") {
         }
     }
 
-    fun depositMoney(amount: Double) {
+    override fun depositMoney(amount: Double) {
         if (amount > 0) {
             availableFunds += amount
-            println("$amount success added to $name")
+            println("$amount success added to $bankAccountName")
         } else {
             println("Exception: amount must be positive")
         }
