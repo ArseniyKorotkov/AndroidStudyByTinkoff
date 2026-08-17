@@ -25,4 +25,14 @@ class Designer : Employee() {
     }
 }
 
-// TODO здесь можно создать новый класс, который будет наследоваться от класса Employee. Не забудьте переопределить методы haveLunch() и goHome()
+class Manager : Employee() {
+    override fun haveLunch() {
+        print("Wait a minute... ")
+        super.haveLunch()
+    }
+
+    override fun goHome() {
+        print("Wait a minute... ")
+        super.goHome()
+    }
+}

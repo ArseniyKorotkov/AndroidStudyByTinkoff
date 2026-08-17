@@ -8,6 +8,9 @@ package by.arsy.languagestudy
  * Посмотри, что будет выведено в терминал
  */
 fun main() {
-    // TODO здесь нужно создать объект своего класса и вызывать у него методы haveLunch() и goHome()
+    val manager = Manager()
+    manager.work()
+    manager.haveLunch()
+    manager.goHome()
 }
 
