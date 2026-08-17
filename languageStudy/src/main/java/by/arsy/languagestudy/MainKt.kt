@@ -1,16 +1,25 @@
 package by.arsy.languagestudy
-/**
- * ДЗ:
- * Добавьте еще один класс, который будет наследоваться от класса Employee. Это может быть класс с названием вашей любимой профессии.
- * Переопределите методы haveLunch() и goHome() для своего класса. Пусть описание в этих методах соответствует вашему представлению об этой профессии.
- *
- * После этого создай объект своего класса в методе main(), как мы это делали на уроке с другими классами и вызови у него методы goHome и haveLunch.
- * Посмотри, что будет выведено в терминал
- */
+
 fun main() {
-    val manager = Manager()
-    manager.work()
-    manager.haveLunch()
-    manager.goHome()
+    val teacher1 = Teacher(
+        name = "Nicholas",
+        age = 35,
+        progExperience = 10,
+        languages = listOf("Kotlin", "Java")
+    )
+    val teacher2 = Teacher(
+        name = "Nicholas",
+        age = 35,
+        progExperience = 10,
+        languages = listOf("Kotlin", "Java")
+    )
+
+    println(teacher1 == teacher2) // equals() and hashCode()
+
+    val olderTeacher = teacher1.copy(age = 48) // copy()
+    println(olderTeacher) // toString()
+
+    val (name, age) = olderTeacher
+    println("$name, $age")
 }
 
