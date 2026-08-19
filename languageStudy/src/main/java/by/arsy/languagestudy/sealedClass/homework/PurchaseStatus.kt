@@ -1,6 +1,6 @@
 package by.arsy.languagestudy.sealedClass.homework
 
-open class PurchaseStatus {
+sealed class PurchaseStatus {
 
     object InProgress: PurchaseStatus()
 
