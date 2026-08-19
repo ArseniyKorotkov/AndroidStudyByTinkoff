@@ -3,6 +3,9 @@ package by.arsy.languagestudy.objects
 fun main() {
     println(MySingleton.myValue)
     MySingleton.doSomething()
+
+    println(MyCoolClass.name)
+    MyCoolClass.create()
 }
 
 interface MyInterface {
@@ -27,4 +30,16 @@ object MySingleton {
        println("Вызываем метод у синглтона")
     }
 }
+
+class MyCoolClass {
+    companion object {
+        val name = "Имя"
+
+        fun create() : MyCoolClass {
+            println("create MyCoolClass")
+            return MyCoolClass()
+        }
+    }
+}
+
 
