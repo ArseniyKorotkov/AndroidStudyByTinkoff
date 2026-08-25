@@ -1,6 +1,8 @@
 package by.arsy.androidstudybytinkoff
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
 import by.arsy.androidstudybytinkoff.databinding.ActivityMainBinding
 
@@ -23,6 +25,22 @@ class MainActivity : AppCompatActivity() {
         binding.helloButton.setOnClickListener {
             counter++
             updateText()
+        }
+
+        binding.secondActivityButton.setOnClickListener {
+            val intent = Intent(
+                applicationContext,
+                SecondActivity::class.java
+            )
+            intent.putExtra("EXTRA_STRING", "Hello second activity")
+            intent.putExtra("EXTRA_INT", counter)
+            startActivity(intent)
+        }
+
+        binding.cameraButton.setOnClickListener {
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+            startActivity(intent)
         }
     }
 

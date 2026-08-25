@@ -19,4 +19,18 @@
         android:layout_width="150dp"
         android:layout_height="150dp"/>
 
+    <Button
+        android:id="@+id/second_activity_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="Second Activity"/>
+
+    <Button
+        android:id="@+id/camera_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="Camera"/>
+
 </LinearLayout>
