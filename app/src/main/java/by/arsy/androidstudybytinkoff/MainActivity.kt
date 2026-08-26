@@ -36,6 +36,18 @@ class MainActivity : AppCompatActivity() {
             )
             intent.putExtra("EXTRA_STRING", "Hello second activity")
             intent.putExtra("EXTRA_INT", counter)
+            intent.putExtra(
+                "S_PERSON",
+                SerializablePerson("SPerson", 42)
+            )
+            intent.putExtra(
+                "P_PERSON",
+                ParcelablePerson("PPerson", 42)
+            )
+            intent.putExtra(
+                "P2_PERSON",
+                ParcelizePerson("P2Person", 42)
+            )
             startActivity(intent)
         }
 
