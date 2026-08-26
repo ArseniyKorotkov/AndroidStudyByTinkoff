@@ -16,6 +16,11 @@
         <activity
             android:name=".SecondActivity"
             android:exported="false"/> <!-- not exported == visible only in this app -->
+        <provider
+            android:name=".MyContentProvider"
+            android:authorities="com.exampleorders"
+            android:exported="true"
+            android:grantUriPermissions="true"/>
     </application>
 
 </manifest>

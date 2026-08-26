@@ -1,6 +1,8 @@
 package by.arsy.androidstudybytinkoff
 
+import android.content.ContentValues
 import android.content.Intent
+import android.database.Cursor
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
@@ -55,5 +57,51 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val KEY_COUNTER = "counter"
+    }
+
+    private fun useCursor() {
+
+        val cursor: Cursor? = contentResolver.query(
+            MyContentProvider.CONTENT_URI, // URI контента
+            null, // Список столбцов для возврата (null означает все столбцы)
+            null, // Параметры отбора (null означает без отбора)
+            null, // Аргументы отбора
+            null // Порядок сортировки (null означает сортировку по умолчанию)
+        )
+
+        cursor?.use {
+            while (it.moveToNext()) {
+                val name = it.getString(it.getColumnIndexOrThrow("example_column_name"))
+                // Обработка значения столбца с названием "example_column_name"
+            }
+        }
+
+        val insertValues = ContentValues().apply {
+            put("example_column_name", "Hello")
+            put("example_column_name2", "World")
+        }
+
+        val resultUri = contentResolver.insert(
+            MyContentProvider.CONTENT_URI,
+            insertValues
+        )
+
+        val updateValues = ContentValues().apply {
+            put("example_column_name", "Hello World!")
+        }
+
+        val rowsUpdated  = contentResolver.update(
+            MyContentProvider.CONTENT_URI,
+            updateValues,
+            "example_column_name2 = ?",
+            arrayOf("World")
+        )
+
+        val rowsDeleted = contentResolver.delete(
+            MyContentProvider.CONTENT_URI,
+            "example_column_name2 = ?",
+            arrayOf("World")
+        )
+
     }
 }
