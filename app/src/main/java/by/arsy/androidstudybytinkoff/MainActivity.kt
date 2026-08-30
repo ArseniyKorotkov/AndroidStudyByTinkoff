@@ -2,7 +2,9 @@ package by.arsy.androidstudybytinkoff
 
 import android.content.ContentValues
 import android.content.Intent
+import android.content.IntentFilter
 import android.database.Cursor
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     private var counter = 0
     private lateinit var binding: ActivityMainBinding
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +59,15 @@ class MainActivity : AppCompatActivity() {
             intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
             startActivity(intent)
         }
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        val intentFilter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        registerReceiver(networkChangeReceiver, intentFilter)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(networkChangeReceiver)
     }
 
     private fun updateText() {
