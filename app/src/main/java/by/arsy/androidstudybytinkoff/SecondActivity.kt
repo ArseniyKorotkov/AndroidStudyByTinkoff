@@ -31,5 +31,21 @@ class SecondActivity : AppCompatActivity() {
 
         val textView = findViewById<TextView>(R.id.second_activity_text)
         textView.text = "$extraString $extraInt\n${sPerson?.name}\n${pPerson?.name}\n${p2Person?.name}"
+
+        if (savedInstanceState == null) {
+            val fragment = MessagesFragment()
+            supportFragmentManager.setFragmentResultListener(
+                "REQUEST_KEY",
+                this
+            ) {_, bundle ->
+                val result = bundle.getString("RESULT_EXTRA")
+                textView.text = result
+            }
+
+            fragment.arguments = Bundle().apply { putString("MESSAGE", "dynamic fragment") }
+            supportFragmentManager.beginTransaction()
+                .add(R.id.dynamic_fragment_container, fragment)
+                .commit()
+        }
     }
 }
