@@ -39,4 +39,9 @@
         android:layout_height="wrap_content"
         android:name="by.arsy.androidstudybytinkoff.MessagesFragment" />
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>

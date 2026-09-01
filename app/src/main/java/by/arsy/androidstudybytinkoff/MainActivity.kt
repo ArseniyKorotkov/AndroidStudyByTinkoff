@@ -63,6 +63,12 @@ class MainActivity : AppCompatActivity() {
         networkChangeReceiver = NetworkChangeReceiver()
         val intentFilter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         registerReceiver(networkChangeReceiver, intentFilter)
+
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, FirstFragment())
+                .commit()
+        }
     }
 
     override fun onDestroy() {
