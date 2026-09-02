@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <application
         android:theme="@style/Theme.Material3.Dark"
         android:label="My app">
@@ -15,17 +13,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/> <!-- open from launcher activity -->
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SecondActivity"
-            android:exported="false"/> <!-- not exported == visible only in this app -->
-        <activity
-            android:name=".ExampleActivity"
-            android:exported="false"/>
-        <provider
-            android:name=".MyContentProvider"
-            android:authorities="com.exampleorders"
-            android:exported="true"
-            android:grantUriPermissions="true"/>
     </application>
 
 </manifest>
