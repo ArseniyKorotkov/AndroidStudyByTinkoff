@@ -1,5 +1,6 @@
 package by.arsy.androidstudybytinkoff
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -30,14 +31,15 @@ class SecondActivity : AppCompatActivity() {
         )
 
         val textView = findViewById<TextView>(R.id.second_activity_text)
-        textView.text = "$extraString $extraInt\n${sPerson?.name}\n${pPerson?.name}\n${p2Person?.name}"
+        textView.text =
+            "$extraString $extraInt\n${sPerson?.name}\n${pPerson?.name}\n${p2Person?.name}"
 
         if (savedInstanceState == null) {
             val fragment = MessagesFragment()
             supportFragmentManager.setFragmentResultListener(
                 "REQUEST_KEY",
                 this
-            ) {_, bundle ->
+            ) { _, bundle ->
                 val result = bundle.getString("RESULT_EXTRA")
                 textView.text = result
             }
@@ -46,6 +48,15 @@ class SecondActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .add(R.id.dynamic_fragment_container, fragment)
                 .commit()
+        }
+
+        val d = findViewById<com.google.android.material.button.MaterialButton>(R.id.to_example_activity)
+        d.setOnClickListener {
+            val intent = Intent(
+                applicationContext,
+                ExampleActivity::class.java
+            )
+            startActivity(intent)
         }
     }
 }
