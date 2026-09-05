@@ -12,5 +12,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.androidImage.setOnClickListener {
+            setGreetingText(R.string.hello_from_android)
+        }
+
+        binding.helloButton.setOnClickListener {
+            setGreetingText(R.string.hello_world)
+        }
+    }
+
+    private fun setGreetingText(textResId: Int) {
+        val greetingText = binding.greetingText
+        val text = getText(textResId)
+        if (text != greetingText.text) {
+            greetingText.text = text
+        }
     }
 }
