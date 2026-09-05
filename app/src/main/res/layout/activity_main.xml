@@ -8,16 +8,7 @@
     <TextView
         android:id="@+id/greeting_text"
         android:text="Hello world"
-        android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        app:navGraph="@navigation/nav_graph"
-        app:defaultNavHost="true"/>
 
 </LinearLayout>
