@@ -7,6 +7,9 @@ import by.arsy.androidstudybytinkoff.adapter.EventAdapter
 import by.arsy.androidstudybytinkoff.databinding.ActivityMainBinding
 import by.arsy.androidstudybytinkoff.event.EventGenerator
 
+const val HAPPY_STATE = 1
+const val SAD_STATE = 0
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -31,6 +34,14 @@ class MainActivity : AppCompatActivity() {
         eventRecycler.adapter = eventAdapter
 
         eventAdapter.data = EventGenerator().getGeneratedEvents(50)
+
+        binding.emoji.setOnClickListener {
+            happinessState = if (happinessState == HAPPY_STATE) {
+                SAD_STATE
+            } else {
+                HAPPY_STATE
+            }
+        }
     }
 
     private fun setGreetingText(textResId: Int) {
@@ -39,5 +50,10 @@ class MainActivity : AppCompatActivity() {
         if (text != greetingText.text) {
             greetingText.text = text
         }
+    }
+
+    //make a such way for simple example
+    companion object {
+        var happinessState = HAPPY_STATE
     }
 }
