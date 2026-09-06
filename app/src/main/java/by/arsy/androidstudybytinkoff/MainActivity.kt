@@ -2,7 +2,10 @@ package by.arsy.androidstudybytinkoff
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import by.arsy.androidstudybytinkoff.adapter.EventAdapter
 import by.arsy.androidstudybytinkoff.databinding.ActivityMainBinding
+import by.arsy.androidstudybytinkoff.event.EventGenerator
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +23,14 @@ class MainActivity : AppCompatActivity() {
         binding.helloButton.setOnClickListener {
             setGreetingText(R.string.hello_world)
         }
+
+        val eventRecycler = binding.eventRecycler
+        val eventAdapter = EventAdapter()
+
+        eventRecycler.layoutManager = LinearLayoutManager(this)
+        eventRecycler.adapter = eventAdapter
+
+        eventAdapter.data = EventGenerator().getGeneratedEvents(50)
     }
 
     private fun setGreetingText(textResId: Int) {
