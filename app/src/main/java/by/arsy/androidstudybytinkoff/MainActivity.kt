@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.arsy.androidstudybytinkoff.adapter.EventAdapter
 import by.arsy.androidstudybytinkoff.databinding.ActivityMainBinding
 import by.arsy.androidstudybytinkoff.event.EventGenerator
+import by.arsy.androidstudybytinkoff.networkExample.MyDataModel
+import by.arsy.androidstudybytinkoff.networkExample.RetrofitClient
 
 const val HAPPY_STATE = 1
 const val SAD_STATE = 0
@@ -50,6 +52,23 @@ class MainActivity : AppCompatActivity() {
         if (text != greetingText.text) {
             greetingText.text = text
         }
+    }
+
+    private fun callApiService() {
+        RetrofitClient.apiService.getData().enqueue(object : retrofit2.Callback<List<MyDataModel>> {
+            override fun onResponse(
+                call: retrofit2.Call<List<MyDataModel>>,
+                response: retrofit2.Response<List<MyDataModel>>
+            ) {
+                if (response.isSuccessful) {
+                    val data = response.body()
+                }
+            }
+
+            override fun onFailure(call: retrofit2.Call<List<MyDataModel>>, t: Throwable) {
+
+            }
+        })
     }
 
     //make a such way for simple example
