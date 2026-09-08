@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.androidx.navigation.safeargs)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -43,6 +44,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.okhttp)
