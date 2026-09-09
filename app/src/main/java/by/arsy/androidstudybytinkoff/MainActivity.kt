@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             .addConverterFactory(Json.asConverterFactory(contentType))
             .build()
 
-        val service = retrofit.create(OperationService::class.java)
+        val service = retrofit.create(ApiService::class.java)
 
         service.getOperations("Oleg").enqueue(object : Callback<Operations> {
             override fun onResponse(
