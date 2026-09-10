@@ -5,14 +5,14 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import by.arsy.androidstudybytinkoff.databinding.ActivityMainBinding
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import okio.IOException
 import retrofit2.Retrofit
 
 class MainActivity : AppCompatActivity() {
@@ -44,27 +44,18 @@ class MainActivity : AppCompatActivity() {
 
         val service = retrofit.create(ApiService::class.java)
 
-        service.getOperations("Oleg").enqueue(object : Callback<Operations> {
-            override fun onResponse(
-                call: Call<Operations?>,
-                response: Response<Operations?>
-            ) {
-                if (response.isSuccessful) {
-                    val operations = response.body()
-                    Log.i(TAG, operations.toString())
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                val operations = service.getOperations("Oleg")
+                if (operations.isSuccessful) {
+                    Log.d(TAG, "response succeed, result: ${operations.body()?.operation}")
                 } else {
-                    Log.e(TAG, "Exception: ${response.code()}")
+                    Log.d(TAG, "response is not successful")
                 }
+            } catch (e: IOException) {
+                Log.d(TAG, "Exception: ${e.message}", e)
             }
-
-            override fun onFailure(
-                call: Call<Operations?>,
-                throwable: Throwable
-            ) {
-                Log.e(TAG, "Exception: ${throwable.message}", throwable)
-            }
-        })
-
+        }
     }
 
     private companion object {

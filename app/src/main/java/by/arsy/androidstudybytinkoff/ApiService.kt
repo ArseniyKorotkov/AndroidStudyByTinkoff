@@ -2,7 +2,9 @@ package by.arsy.androidstudybytinkoff
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -12,9 +14,9 @@ import retrofit2.http.Query
 interface ApiService {
 
     @GET("users/{user}.json")
-    fun getOperations(
+    suspend fun getOperations(
         @Path("user") user: String
-    ) : Call<Operations>
+    ) : Response<Operations>
 
 
     @GET("users")
