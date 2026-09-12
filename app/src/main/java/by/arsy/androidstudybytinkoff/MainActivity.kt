@@ -4,13 +4,18 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import by.arsy.androidstudybytinkoff.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
@@ -18,6 +23,8 @@ import kotlinx.coroutines.withContext
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    private lateinit var customScope: CoroutineScope
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,9 +44,15 @@ class MainActivity : AppCompatActivity() {
             Log.i(TAG, "Main handle: ${throwable.message}")
         }
 
-        // coroutineExceptionHandler is helpful for save app
-        lifecycleScope.launch(mainCoroutineExceptionHandler/*delete it for experiment*/) {
-            // scope use Dispatchers.MAIN as default dispatcher
+        val job = Job()
+
+        val coroutineName = CoroutineName("Custom coroutine scope")
+
+        customScope = CoroutineScope(job + Dispatchers.Main + mainCoroutineExceptionHandler + coroutineName)
+
+        customScope.launch {
+            Log.i(TAG, "Start scope: ${coroutineContext[CoroutineName.Key]}")
+            Log.i(TAG, "Job is active onCreate: ${job.isActive}")
             // here shift to Dispatchers.IO
             withContext(Dispatchers.IO) {
                 try {
@@ -111,6 +124,22 @@ class MainActivity : AppCompatActivity() {
             Log.i(TAG, "Continue work in Dispatcher.MAIN")
             textView.text = "Success coroutine work!"
         }
+    }
+
+    private fun stopCoroutinesWithSaveJobInScope() {
+        customScope.coroutineContext.cancelChildren()
+
+        /* or
+        val job = customScope.coroutineContext.job
+        job.cancelChildren()
+         */
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i(TAG, "Job is active onDestroy before cancel: ${customScope.coroutineContext.job.isActive}")
+        customScope.cancel() // call job.cancel()
+        Log.i(TAG, "Job is active onDestroy after cancel: ${customScope.coroutineContext.job.isActive}")
     }
 
     private companion object {
