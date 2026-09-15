@@ -1,54 +1,61 @@
 package by.arsy.androidstudybytinkoff
 
-import android.content.SharedPreferences
+import android.content.Context
 import android.os.Bundle
-import androidx.activity.viewModels
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.doOnTextChanged
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.lifecycleScope
 import by.arsy.androidstudybytinkoff.databinding.ActivityMainBinding
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val mainViewModel: MainViewModel by viewModels()
+    private lateinit var textInput: EditText
 
-    private val sharedPref: SharedPreferences by lazy {
-        baseContext.getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-    }
-    private lateinit var sharedPrefEditor: SharedPreferences.Editor
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFS_NAME)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        sharedPrefEditor = sharedPref.edit()
 
-        val textInput = binding.textInput
-
-        textInput.doOnTextChanged { _, _, _, _ ->
-            val text = textInput.text.toString()
-            sharedPrefEditor.putInt(  // put to editor
-                AMOUNT_PREFS_KEY,
-                if (text.isBlank()) 0 else text.toInt()
-            )
-        }
+        textInput = binding.textInput
 
         binding.button.setOnClickListener {
-            sharedPrefEditor.clear() // clear editor
+            lifecycleScope.launch {
+                dataStore.edit { settings ->
+                    settings.clear()  // clear
+                }
+            }
         }
 
-        val restoreAmount = sharedPref.getInt(AMOUNT_PREFS_KEY, 0) // get from app settings
-        textInput.setText(restoreAmount.toString())
+        lifecycleScope.launch {
+            val value = dataStore.data.first()[AMOUNT_PREFS_KEY] ?: 0 // read
+            textInput.setText(value.toString())
+        }
     }
 
     override fun onPause() {
         super.onPause()
-        sharedPrefEditor.apply() // save from editor to app settings
+        lifecycleScope.launch {
+            val text = textInput.text.toString()
+            dataStore.edit { settings ->   // write
+                settings[AMOUNT_PREFS_KEY] = if (text.isBlank()) 0 else text.toInt()
+            }
+        }
     }
 
     companion object {
         const val PREFS_NAME = "prefs_name"
-        const val AMOUNT_PREFS_KEY = "amount_prefs_name"
+        val AMOUNT_PREFS_KEY = intPreferencesKey("amount_prefs_name")
     }
 }
