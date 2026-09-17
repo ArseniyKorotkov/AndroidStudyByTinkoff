@@ -2,6 +2,7 @@ package by.arsy.androidstudybytinkoff
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
@@ -10,9 +11,14 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.lifecycleScope
+import androidx.room.Room
+import by.arsy.androidstudybytinkoff.database.AppDatabase
+import by.arsy.androidstudybytinkoff.database.User
 import by.arsy.androidstudybytinkoff.databinding.ActivityMainBinding
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +33,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val room = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "database-name"
+        ).build()
+        val user1 = User(1, "1a", "1b")
+        val user2 = User(2, "2a", "2b")
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                val dao = room.userDao()
+                dao.delete(user1)
+                dao.delete(user2)
+                dao.insertAll(user1)
+                dao.insertAll(user2)
+                dao.delete(user2)
+                val all = dao.getAll()
+                Log.i(TAG, all.toString())
+            }
+        }
+
 
         textInput = binding.textInput
 
@@ -55,6 +81,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
+
+        const val TAG = "MainActivity"
         const val PREFS_NAME = "prefs_name"
         val AMOUNT_PREFS_KEY = intPreferencesKey("amount_prefs_name")
     }
