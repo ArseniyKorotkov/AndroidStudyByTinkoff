@@ -38,13 +38,12 @@ class MainActivity : AppCompatActivity() {
             applicationContext,
             AppDatabase::class.java, "database-name"
         ).build()
-        val user1 = User(1, "1a", "1b")
-        val user2 = User(2, "2a", "2b")
+        val user1 = User(firstName = "1a", lastName = "1b")
+        val user2 = User(firstName = "2a", lastName = "2b")
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 val dao = room.userDao()
-                dao.delete(user1)
-                dao.delete(user2)
+                // use OnConflictStrategy
                 dao.insertAll(user1)
                 dao.insertAll(user2)
                 dao.delete(user2)
