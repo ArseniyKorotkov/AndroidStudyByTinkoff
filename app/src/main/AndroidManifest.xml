@@ -10,7 +10,7 @@
         android:requestLegacyExternalStorage="true"
         android:label="My app">
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.MainActivity"
             android:launchMode="singleTask"
             android:exported="true"> <!-- exported == open for launcher -->
             <intent-filter> <!-- start app activity demands intent-filter -->

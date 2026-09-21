@@ -1,4 +1,4 @@
-package by.arsy.androidstudybytinkoff
+package by.arsy.androidstudybytinkoff.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
