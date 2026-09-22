@@ -8,6 +8,7 @@
     <application
         android:theme="@style/Theme.Material3.Dark"
         android:requestLegacyExternalStorage="true"
+        android:name=".AndroidCourseApp"
         android:label="My app">
         <activity
             android:name=".presentation.MainActivity"
